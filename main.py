@@ -13,11 +13,11 @@ class Invoice:
 
 
     def createNewInvoice(self):
-        pass
+        print('pass')
 
 
     def printOut(self):
-        pass
+        print('pass')
 
 
     def sendToCustomer(self):
