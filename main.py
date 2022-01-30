@@ -273,4 +273,6 @@ new_contractor = Contractor(contractor_id=1,
 
 new_owner.show_owner()
 new_contractor.show_contractor()
-new_owner.set_new_password()
+#new_owner.set_new_password()
+a = Invoice.ConvertEurToPln(10)
+print(a)
