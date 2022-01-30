@@ -2,6 +2,11 @@ import datetime
 
 
 class Owner:
+
+    '''
+    class Owner defines the owner of the programm and issuer of all invoices
+    '''
+
     def __init__(self,
                  login = 'login',
                  password = 'password',
@@ -34,6 +39,10 @@ class Owner:
 
     def show_owner(self):
 
+        '''
+        shows Owner basic data
+        '''
+
         print("="*10, " OWNER ", "="*10)
         print("""ID:\t\t\t\t{}
 Tax No.:\t\t{}
@@ -43,22 +52,27 @@ Company Name:\t{}""".format(self.owner_id, self.owner_tax_number, self.owner_fir
         print("="*30)
 
     def __get_login_and_password(self):
+
+        '''
+        returns login and password
+        '''
+
         return self.__login, self.__password
 
-    def __set_new_password(self):
-        try:
-            self.password == input("Type your password")
-        except:
-            pass
-        else:
-            pass
-        finally:
-            pass
+    def set_new_password(self):
+
+        '''
+        enables to set a new password
+        '''
+
+        pass
+
 
 class Contractor:
 
     number_of_contractors = 0
     list_of_contractors = []
+
     '''
     Contractor - class operating on contractors, i.e. customers, suppliers and outsourcing companies
     '''
@@ -111,8 +125,9 @@ Company Name:\t{}""".format(self.contractor_id, self.contractor_tax_number, self
         pass
 
 class Invoice(Owner, Contractor):
+
     '''
-    Class meaning
+    Invoice - class operating on invoices enables to issue new invoices and show existing ones
     '''
 
     known_kinds = ['invoice', 'correction invoice', 'advance payment invoice', 'final invoice', 'proforma']
@@ -258,3 +273,4 @@ new_contractor = Contractor(contractor_id=1,
 
 new_owner.show_owner()
 new_contractor.show_contractor()
+new_owner.set_new_password()
