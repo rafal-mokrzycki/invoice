@@ -64,8 +64,18 @@ Company Name:\t{}""".format(self.owner_id, self.owner_tax_number, self.owner_fir
         '''
         enables to set a new password
         '''
+        x = 0
+        while x < 3:
+            my_password = input("Type in your password: ")
+            if self.__password == my_password:
+                new_password = input("Type in your new password: ")
+                break
+            else:
+                print("Sorry, password incorrect. Try again.")
+            x+=1
 
-        pass
+
+        return self.__password
 
 
 class Contractor:
@@ -276,3 +286,11 @@ new_contractor.show_contractor()
 #new_owner.set_new_password()
 a = Invoice.ConvertEurToPln(10)
 print(a)
+
+new_owner.set_new_password()
+print('='*30)
+a,b=new_owner._Owner__get_login_and_password()
+print(a,b)
+print('='*30)
+c=new_owner.set_new_password()
+print(c)
