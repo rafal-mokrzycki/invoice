@@ -1,5 +1,5 @@
 import datetime
-
+import re
 
 class Owner:
 
@@ -22,17 +22,17 @@ class Owner:
                  owner_city='Warszawa',
                  owner_email='smith@drutpol.pl',
                  owner_phone_number=722633544):
-        self.owner_id = owner_id,
-        self.owner_tax_number = owner_tax_number,
-        self.owner_first_name = owner_first_name,
-        self.owner_last_name = owner_last_name,
-        self.owner_company_name = owner_company_name,
-        self.owner_street = owner_street,
-        self.owner_house_number = owner_house_number,
-        self.owner_flat_number = owner_flat_number,
-        self.owner_zip_code = owner_zip_code,
-        self.owner_city = owner_city,
-        self.owner_email = owner_email,
+        self.owner_id = owner_id
+        self.owner_tax_number = owner_tax_number
+        self.owner_first_name = owner_first_name
+        self.owner_last_name = owner_last_name
+        self.owner_company_name = owner_company_name
+        self.owner_street = owner_street
+        self.owner_house_number = owner_house_number
+        self.owner_flat_number = owner_flat_number
+        self.owner_zip_code = owner_zip_code
+        self.owner_city = owner_city
+        self.owner_email = owner_email
         self.owner_phone_number = owner_phone_number
         self.__login = login
         self.__password = password
@@ -68,12 +68,23 @@ Company Name:\t{}""".format(self.owner_id, self.owner_tax_number, self.owner_fir
         while x < 3:
             my_password = input("Type in your password: ")
             if self.__password == my_password:
-                new_password = input("Type in your new password: ")
+                while True:
+                    new_password = input("Type in your new password: ")
+                    if new_password == self.__password:
+                        print("The new password should be different from the old one.")
+                    else:
+                        if  re.match(r'[A-Za-z0-9]{8,}', new_password):
+                            self.__password = new_password
+                            print("New password has been set.")
+                            break
+                        else:
+                            print("Your password must have at least 8 characters. Use lowercase letters, uppercase letters and numbers.")
                 break
             else:
-                print("Sorry, password incorrect. Try again.")
-            x+=1
-
+                print("Sorry, password is incorrect. Try again.")
+            x += 1
+        else:
+            print("Sorry, you typed an incorrect password 3 times.")
 
         return self.__password
 
@@ -281,16 +292,23 @@ new_contractor = Contractor(contractor_id=1,
                             contractor_email='andrzej@polonex.com',
                             contractor_phone_number=111222333)
 
-new_owner.show_owner()
+'''new_owner.show_owner()
 new_contractor.show_contractor()
 #new_owner.set_new_password()
 a = Invoice.ConvertEurToPln(10)
-print(a)
+print(a)'''
 
+print(vars(new_owner))
+print(new_owner.owner_city)
+print(new_owner._Owner__password)
+print('='*30)
 new_owner.set_new_password()
 print('='*30)
+print(new_owner._Owner__password)
+
+'''print('='*30)
 a,b=new_owner._Owner__get_login_and_password()
 print(a,b)
 print('='*30)
 c=new_owner.set_new_password()
-print(c)
+print(c)'''
