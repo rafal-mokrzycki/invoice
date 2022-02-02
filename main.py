@@ -51,15 +51,26 @@ Last Name:\t\t{}
 Company Name:\t{}""".format(self.owner_id, self.owner_tax_number, self.owner_first_name, self.owner_last_name, self.owner_company_name))
         print("="*30)
 
-    def __get_login_and_password(self):
+    @property
+    def login(self):
 
         '''
-        returns login and password
+        returns login
         '''
 
-        return self.__login, self.__password
+        return self.__login
 
-    def set_new_password(self):
+    @property
+    def password(self):
+
+        '''
+        returns password
+        '''
+
+        return self.__password
+
+    @password.setter
+    def password(self, value):
 
         '''
         enables to set a new password
@@ -87,6 +98,15 @@ Company Name:\t{}""".format(self.owner_id, self.owner_tax_number, self.owner_fir
             print("Sorry, you typed an incorrect password 3 times.")
 
         return self.__password
+
+    @password.deleter
+    def password(self):
+
+        '''
+        deletes the password
+        '''
+
+        self.__password = None
 
 
 class Contractor:
@@ -302,7 +322,7 @@ print(vars(new_owner))
 print(new_owner.owner_city)
 print(new_owner._Owner__password)
 print('='*30)
-new_owner.set_new_password()
+new_owner.password = ''
 print('='*30)
 print(new_owner._Owner__password)
 
