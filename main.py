@@ -1,7 +1,7 @@
 import datetime
 import re
 import pandas as pd
-import django.db
+from django.db import models
 
 
 class Owner:
@@ -299,8 +299,6 @@ class InvoicePosition:
         self.discount = discount
         self.net_value = net_value
         self.tax = tax
-
-
 
 class Database:
 
