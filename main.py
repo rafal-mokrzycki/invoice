@@ -1,6 +1,7 @@
 import datetime
 import re
 import pandas as pd
+import django.db
 
 
 class Owner:
@@ -284,9 +285,13 @@ class Invoice(Owner, Contractor):
     def ConvertPlnToEur(PLN):
         return round(PLN * 0.22, 2)
 
+    @staticmethod
+    def ConvertNetToGross(net_value, tax):
+        return round(net_value * (1 + tax), 2)
+
 class InvoicePosition:
 
-    def __init__(self, position, unit, number_of_pieces, code, discount, net_value, tax, gross_value):
+    def __init__(self, position: str, unit: str, number_of_pieces: float, code: str, discount: float, net_value: float, tax: float):
         self.position = position
         self.unit = unit
         self.number_of_pieces = number_of_pieces
@@ -294,11 +299,19 @@ class InvoicePosition:
         self.discount = discount
         self.net_value = net_value
         self.tax = tax
-        self.gross_value = gross_value
+
 
 
 class Database:
-    pass
+
+    def __init__(self, a, b, c):
+        self.a = a
+        self.b = b
+        self.c = c
+
+    def database(self):
+        df = pd.DataFrame()
+        return df
 
 '''
 invoice01 = Invoice(
@@ -329,21 +342,22 @@ new_contractor = Contractor(contractor_id=1,
                             contractor_city='Warszawa',
                             contractor_email='andrzej@polonex.com',
                             contractor_phone_number=111222333)
-
+new_position = InvoicePosition('sugar', 'kg', 2.5, '234.234.234', 0, 100, .23)
+print(Invoice.ConvertNetToGross(new_position.net_value, new_position.tax))
 '''new_owner.show_owner()
 new_contractor.show_contractor()
 #new_owner.set_new_password()
 a = Invoice.ConvertEurToPln(10)
 print(a)'''
 
-print(vars(new_owner))
+'''print(vars(new_owner))
 print(new_owner.owner_city)
 print(new_owner._Owner__password)
 print('=' * 30)
 new_owner.password = ''
 print('=' * 30)
 print(new_owner._Owner__password)
-
+'''
 '''print('='*30)
 a,b=new_owner._Owner__get_login_and_password()
 print(a,b)
