@@ -31,6 +31,8 @@ class Invoice(Owner, Contractor):
         Contractor.__init__(self, contractor_id)
         print('>>class Invoice - init - finishing')
 
+
+
 invoice = Invoice(1,2,3)
 print(vars(invoice))
 print('*'*30)

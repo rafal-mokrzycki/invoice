@@ -1,15 +1,15 @@
 import datetime
 import re
 
-class Owner:
 
+class Owner:
     '''
     class Owner defines the owner of the programm and issuer of all invoices
     '''
 
     def __init__(self,
-                 login = 'login',
-                 password = 'password',
+                 login='login',
+                 password='password',
                  owner_id=0,
                  owner_tax_number=1234567890,
                  owner_first_name='Adam',
@@ -43,13 +43,14 @@ class Owner:
         shows Owner basic data
         '''
 
-        print("="*10, " OWNER ", "="*10)
+        print("=" * 10, " OWNER ", "=" * 10)
         print("""ID:\t\t\t\t{}
 Tax No.:\t\t{}
 First Name:\t\t{}
 Last Name:\t\t{}
-Company Name:\t{}""".format(self.owner_id, self.owner_tax_number, self.owner_first_name, self.owner_last_name, self.owner_company_name))
-        print("="*30)
+Company Name:\t{}""".format(self.owner_id, self.owner_tax_number, self.owner_first_name, self.owner_last_name,
+                            self.owner_company_name))
+        print("=" * 30)
 
     @property
     def login(self):
@@ -84,12 +85,13 @@ Company Name:\t{}""".format(self.owner_id, self.owner_tax_number, self.owner_fir
                     if new_password == self.__password:
                         print("The new password should be different from the old one.")
                     else:
-                        if  re.match(r'[A-Za-z0-9]{8,}', new_password):
+                        if not re.match(r'[A-Za-z0-9]{8,}', new_password):
+                            print(
+                                "Your password must have at least 8 characters. Use lowercase letters, uppercase letters and numbers.")
+                        else:
                             self.__password = new_password
                             print("New password has been set.")
                             break
-                        else:
-                            print("Your password must have at least 8 characters. Use lowercase letters, uppercase letters and numbers.")
                 break
             else:
                 print("Sorry, password is incorrect. Try again.")
@@ -110,7 +112,6 @@ Company Name:\t{}""".format(self.owner_id, self.owner_tax_number, self.owner_fir
 
 
 class Contractor:
-
     number_of_contractors = 0
     list_of_contractors = []
 
@@ -118,8 +119,10 @@ class Contractor:
     Contractor - class operating on contractors, i.e. customers, suppliers and outsourcing companies
     '''
 
-    def __init__(self, contractor_id, contractor_tax_number, contractor_first_name, contractor_last_name, contractor_company_name,
-                 contractor_street, contractor_house_number, contractor_flat_number, contractor_zip_code, contractor_city,
+    def __init__(self, contractor_id, contractor_tax_number, contractor_first_name, contractor_last_name,
+                 contractor_company_name,
+                 contractor_street, contractor_house_number, contractor_flat_number, contractor_zip_code,
+                 contractor_city,
                  contractor_email, contractor_phone_number):
         '''
         init - arguments accepted:
@@ -136,6 +139,7 @@ class Contractor:
         contractor_email - contractor email address,
         contractor_phone_number - contractor phone number.
         '''
+
         self.contractor_id = contractor_id
         self.contractor_tax_number = contractor_tax_number
         self.contractor_first_name = contractor_first_name
@@ -152,21 +156,21 @@ class Contractor:
         Contractor.list_of_contractors.append(self)
 
     def show_contractor(self):
-            print("=" * 8, " CONTRACTOR ", "=" * 8)
-            print("""ID:\t\t\t\t{}
+        print("=" * 8, " CONTRACTOR ", "=" * 8)
+        print("""ID:\t\t\t\t{}
 Tax No.:\t\t{}
 First Name:\t\t{}
 Last Name:\t\t{}
-Company Name:\t{}""".format(self.contractor_id, self.contractor_tax_number, self.contractor_first_name, self.contractor_last_name,
-                                self.contractor_company_name))
-            print("=" * 30)
+Company Name:\t{}""".format(self.contractor_id, self.contractor_tax_number, self.contractor_first_name,
+                            self.contractor_last_name,
+                            self.contractor_company_name))
+        print("=" * 30)
 
     def add_contractor(self):
-
         pass
 
-class Invoice(Owner, Contractor):
 
+class Invoice(Owner, Contractor):
     '''
     Invoice - class operating on invoices enables to issue new invoices and show existing ones
     '''
@@ -205,16 +209,15 @@ class Invoice(Owner, Contractor):
                  contractor_last_name, contractor_company_name,
                  contractor_street, contractor_house_number, contractor_flat_number, contractor_zip_code,
                  contractor_city, contractor_email, contractor_phone_number,
-                 owner_id, owner_tax_number, owner_first_name,
-                 owner_last_name, owner_company_name, owner_street, owner_house_number, owner_flat_numbe,
-                 owner_zip_code, owner_city, owner_email, owner_phone_number, issue_date = datetime.date.today()):
-        Contractor.__init__(self, contractor_id, contractor_tax_number, contractor_first_name,
-                 contractor_last_name, contractor_company_name,
-                 contractor_street, contractor_house_number, contractor_flat_number, contractor_zip_code,
-                 contractor_city, contractor_email, contractor_phone_number)
+                 issue_date=datetime.date.today()):
         Owner.__init__(self, owner_id, owner_tax_number, owner_first_name,
-                 owner_last_name, owner_company_name, owner_street, owner_house_number, owner_flat_numbe,
-                 owner_zip_code, owner_city, owner_email, owner_phone_number)
+                       owner_last_name, owner_company_name, owner_street, owner_house_number, owner_flat_number,
+                       owner_zip_code, owner_city, owner_email, owner_phone_number)
+        Contractor.__init__(self, contractor_id, contractor_tax_number, contractor_first_name,
+                            contractor_last_name, contractor_company_name,
+                            contractor_street, contractor_house_number, contractor_flat_number, contractor_zip_code,
+                            contractor_city, contractor_email, contractor_phone_number)
+
         self.invoice_number = invoice_number
         self.issue_date = issue_date
 
@@ -282,6 +285,7 @@ class Invoice(Owner, Contractor):
     def ConvertPlnToEur(PLN):
         return round(PLN * 0.22, 2)
 
+
 '''
 invoice01 = Invoice(
 
@@ -297,7 +301,7 @@ print('*' * 30)
 contractor01.show_info('full')
 '''
 
-#help(Contractor)
+# help(Contractor)
 new_owner = Owner()
 new_contractor = Contractor(contractor_id=1,
                             contractor_tax_number=987654321,
@@ -321,9 +325,9 @@ print(a)'''
 print(vars(new_owner))
 print(new_owner.owner_city)
 print(new_owner._Owner__password)
-print('='*30)
+print('=' * 30)
 new_owner.password = ''
-print('='*30)
+print('=' * 30)
 print(new_owner._Owner__password)
 
 '''print('='*30)
