@@ -1,5 +1,6 @@
 import datetime
 import re
+import pandas as pd
 
 
 class Owner:
@@ -110,7 +111,6 @@ Company Name:\t{}""".format(self.owner_id, self.owner_tax_number, self.owner_fir
 
         self.__password = None
 
-
 class Contractor:
     number_of_contractors = 0
     list_of_contractors = []
@@ -168,7 +168,6 @@ Company Name:\t{}""".format(self.contractor_id, self.contractor_tax_number, self
 
     def add_contractor(self):
         pass
-
 
 class Invoice(Owner, Contractor):
     '''
@@ -285,6 +284,21 @@ class Invoice(Owner, Contractor):
     def ConvertPlnToEur(PLN):
         return round(PLN * 0.22, 2)
 
+class InvoicePosition:
+
+    def __init__(self, position, unit, number_of_pieces, code, discount, net_value, tax, gross_value):
+        self.position = position
+        self.unit = unit
+        self.number_of_pieces = number_of_pieces
+        self.code = code
+        self.discount = discount
+        self.net_value = net_value
+        self.tax = tax
+        self.gross_value = gross_value
+
+
+class Database:
+    pass
 
 '''
 invoice01 = Invoice(
