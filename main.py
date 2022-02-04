@@ -1,17 +1,16 @@
 import datetime
 import re
+
 '''import pandas as pd
 from django.db import models'''
 
 
 class Owner:
     '''
-    class Owner defines the owner of the programm and issuer of all invoices
+    class Owner defines the owner of the program and issuer of all invoices
     '''
 
     def __init__(self,
-                 login='login',
-                 password='password',
                  owner_id=0,
                  owner_tax_number=1234567890,
                  owner_first_name='Adam',
@@ -23,7 +22,10 @@ class Owner:
                  owner_zip_code='01-111',
                  owner_city='Warszawa',
                  owner_email='smith@drutpol.pl',
-                 owner_phone_number=722633544):
+                 owner_phone_number=722633544,
+                 login='login',
+                 password='password'
+                 ):
         self.owner_id = owner_id
         self.owner_tax_number = owner_tax_number
         self.owner_first_name = owner_first_name
@@ -39,20 +41,33 @@ class Owner:
         self.__login = login
         self.__password = password
 
-    def show_owner(self):
+    def __str__(self) -> object:
 
         '''
         shows Owner basic data
         '''
 
-        print("=" * 10, " OWNER ", "=" * 10)
-        print("""ID:\t\t\t\t{}
-Tax No.:\t\t{}
-First Name:\t\t{}
-Last Name:\t\t{}
-Company Name:\t{}""".format(self.owner_id, self.owner_tax_number, self.owner_first_name, self.owner_last_name,
-                            self.owner_company_name))
-        print("=" * 30)
+        #         return """
+        # ====================================
+        # OWNER DATA
+        # ====================================
+        # ID:\t\t\t\t{}
+        # Tax No.:\t\t{}
+        # First Name:\t\t{}
+        # Last Name:\t\t{}
+        # Company Name:\t{}
+        # ====================================""".format(self.owner_id, self.owner_tax_number, self.owner_first_name,
+        #                                                self.owner_last_name, self.owner_company_name)
+        return """
+{} {}
+{}
+{} {} / {}
+{} {}
+tax number: {}
+""".format(self.owner_first_name, self.owner_last_name, self.owner_company_name,
+                         self.owner_street, self.owner_house_number, self.owner_flat_number, self.owner_zip_code,
+                         self.owner_city, self.owner_tax_number
+                         )
 
     @property
     def login(self):
@@ -112,6 +127,7 @@ Company Name:\t{}""".format(self.owner_id, self.owner_tax_number, self.owner_fir
 
         self.__password = None
 
+
 class Contractor:
     number_of_contractors = 0
     list_of_contractors = []
@@ -121,10 +137,8 @@ class Contractor:
     '''
 
     def __init__(self, contractor_id, contractor_tax_number, contractor_first_name, contractor_last_name,
-                 contractor_company_name,
-                 contractor_street, contractor_house_number, contractor_flat_number, contractor_zip_code,
-                 contractor_city,
-                 contractor_email, contractor_phone_number):
+                 contractor_company_name, contractor_street, contractor_house_number, contractor_flat_number,
+                 contractor_zip_code, contractor_city, contractor_email, contractor_phone_number):
         '''
         init - arguments accepted:
         contractor_id - contractor number in a database,
@@ -156,22 +170,39 @@ class Contractor:
         Contractor.number_of_contractors += 1
         Contractor.list_of_contractors.append(self)
 
-    def show_contractor(self):
-        print("=" * 8, " CONTRACTOR ", "=" * 8)
-        print("""ID:\t\t\t\t{}
-Tax No.:\t\t{}
-First Name:\t\t{}
-Last Name:\t\t{}
-Company Name:\t{}""".format(self.contractor_id, self.contractor_tax_number, self.contractor_first_name,
-                            self.contractor_last_name,
-                            self.contractor_company_name))
-        print("=" * 30)
+    def __str__(self):
+        '''
+        shows Contractor basic data
+        '''
+
+        #     return """
+        # ====================================
+        # CONTRACTOR DATA
+        # ====================================
+        # ID:\t\t\t\t{}
+        # Tax No.:\t\t{}
+        # First Name:\t\t{}
+        # Last Name:\t\t{}
+        # Company Name:\t{}
+        # ====================================""".format(self.contractor_id, self.contractor_tax_number,
+        #                                                self.contractor_first_name, self.contractor_last_name,
+        #                                                self.contractor_company_name)
+
+        return """
+{} {}
+{}
+{} {} / {}
+{} {}
+tax number: {}
+""".format(self.contractor_first_name, self.contractor_last_name, self.contractor_company_name,
+                         self.contractor_street, self.contractor_house_number, self.contractor_flat_number,
+                         self.contractor_zip_code, self.contractor_city, self.contractor_tax_number
+                         )
 
     def add_contractor(self):
         pass
 
 
-# noinspection PyTypeChecker
 class Invoice(Owner, Contractor):
     '''
     Invoice - class operating on invoices enables to issue new invoices and show existing ones
@@ -182,34 +213,11 @@ class Invoice(Owner, Contractor):
 
     invoices = []
 
-    '''
-    Zgodnie z przepisami   ustawy o podatku od towarów i usług art. 106e ust. 1 faktura powinna zawierać co najmniej:
-
-    datę wystawienia,
-    kolejny numer nadany w ramach jednej lub więcej serii, który w sposób jednoznaczny ją identyfikuje,
-    imiona i nazwiska lub nazwę podatnika i nabywcy towarów lub usług oraz ich adresy,
-    numer, za pomocą którego podatnik jest zidentyfikowany na potrzeby podatku,
-    numer, za pomocą którego nabywca towarów lub usług jest zidentyfikowany na potrzeby podatku lub podatku od wartości dodanej, 
-    pod którym otrzymał on towary lub usługi,
-    datę dokonania lub zakończenia dostawy towarów albo wykonania usługi bądź datę otrzymania zapłaty, 
-    jeżeli nastąpiła ona przed sprzedażą, o ile taka data jest określona i różni się od daty wystawienia faktury,
-    nazwę (rodzaj) towaru lub usługi,
-    miarę i ilość (liczbę) dostarczonych towarów lub zakres wykonanych usług,
-    cenę jednostkową towaru lub usługi bez kwoty podatku (cenę jednostkową netto),
-    kwoty wszelkich upustów lub obniżek cen, w tym w formie rabatu z tytułu wcześniejszej zapłaty, 
-    o ile nie zostały one uwzględnione w cenie jednostkowej netto,
-    wartość dostarczonych towarów lub wykonanych usług, objętych transakcją bez kwoty podatku (wartość sprzedaży netto),
-    stawkę podatku,
-    sumę wartości sprzedaży netto z podziałem na sprzedaż objętą poszczególnymi stawkami podatku i sprzedaż zwolnioną od podatku,
-    kwotę podatku od sumy wartości sprzedaży netto z podziałem na kwoty dotyczące poszczególnych stawek podatku,
-    kwotę należności ogółem.
-
-    Zobacz więcej: https://poradnikprzedsiebiorcy.pl/-elementy-faktury-vat
-    '''
-
     def __init__(self, owner_id, owner_tax_number, owner_first_name,
-                       owner_last_name, owner_company_name, owner_street, owner_house_number, owner_flat_number,
-                       owner_zip_code, owner_city, owner_email, owner_phone_number, contractor_id, contractor_tax_number, contractor_first_name,
+                 owner_last_name, owner_company_name, owner_street, owner_house_number, owner_flat_number,
+                 owner_zip_code, owner_city, owner_email, owner_phone_number,
+                 contractor_id, contractor_tax_number,
+                 contractor_first_name,
                  contractor_last_name, contractor_company_name,
                  contractor_street, contractor_house_number, contractor_flat_number, contractor_zip_code,
                  contractor_city, contractor_email, contractor_phone_number,
@@ -256,29 +264,43 @@ class Invoice(Owner, Contractor):
         pass
 
     def __str__(self):
+        '''
+        super().__str__() + " + that"
+        '''
+#         return """
+# INVOICE NUMBER: {}
+#
+# ISSUER:
+# {}
+# {}
+# {} {} / {}
+# {} {}
+# tax number: {}
+#
+# CONTRACTOR:
+# {} {}
+# {}
+# {} {} / {}
+# {} {}
+# tax number: {}
+# """.format(self.invoice_number, self.owner_first_name, self.owner_last_name, self.owner_company_name,
+#            self.owner_street, self.owner_house_number, self.owner_flat_number, self.owner_zip_code,
+#            self.owner_city, self.owner_tax_number,
+#            self.contractor_first_name, self.contractor_last_name, self.contractor_company_name,
+#            self.contractor_street, self.contractor_house_number, self.contractor_flat_number,
+#            self.contractor_zip_code, self.contractor_city, self.contractor_tax_number
+#            )
+
         return """
-INOIVCE NUMBER: {}
-
-ISSUER:
-{} {}
-{}
-{} {} / {}
-{} {}
-tax number: {}
-
-CONTRACTOR:
-{} {}
-{}
-{} {} / {}
-{} {}
-tax number: {}
-""".format(self.invoice_number, self.owner_first_name, self.owner_last_name, self.owner_company_name,
-           self.owner_street, self.owner_house_number, self.owner_flat_number, self.owner_zip_code,
-           self.owner_city, self.owner_tax_number,
-           self.contractor_first_name, self.contractor_last_name, self.contractor_company_name,
-           self.contractor_street, self.contractor_house_number, self.contractor_flat_number,
-           self.contractor_zip_code, self.contractor_city, self.contractor_tax_number
-           )
+====================================
+INVOICE NUMBER: {}
+issue date: {}
+==========
+| SELLER |
+==========""".format(self.invoice_number, self.issue_date) + Owner.__str__(self) + """
+==========
+| BUYER  |
+==========""" + Contractor.__str__(self)
 
     def printOut(self):
         pass
@@ -318,9 +340,16 @@ tax number: {}
     def ConvertNetToGross(net_value, tax):
         return round(net_value * (1 + tax), 2)
 
+
 class InvoicePosition:
 
-    def __init__(self, position: str, unit: str, number_of_pieces: float, code: str, discount: float, net_value: float, tax: float):
+    def __init__(self, position: str,
+                 unit: str,
+                 number_of_pieces: float,
+                 code: str,
+                 discount: float,
+                 net_value: float,
+                 tax: float):
         self.position = position
         self.unit = unit
         self.number_of_pieces = number_of_pieces
@@ -328,6 +357,7 @@ class InvoicePosition:
         self.discount = discount
         self.net_value = net_value
         self.tax = tax
+
 
 class Database:
 
@@ -340,22 +370,7 @@ class Database:
         df = pd.DataFrame()
         return df
 
-'''
-invoice01 = Invoice(
 
-for i in Invoice.invoices:
-    i.show_info()
-
-contractor01 = Contractor(contractor_id=26541, contractor_tax_number=5242563258, contractor_first_name='Adam',
-                          contractor_last_name='Nowak', contractor_street='Hoża', contractor_house_number=23,
-                          contractor_flat_number=17, contractor_zip_code='00-174', contractor_city='Warszawa',
-                          contractor_email='adam.nowak@gmail.com', contractor_phone_number=654789321)
-contractor01.show_info('basic')
-print('*' * 30)
-contractor01.show_info('full')
-'''
-
-# help(Contractor)
 new_owner = Owner()
 new_contractor = Contractor(contractor_id=1,
                             contractor_tax_number=987654321,
@@ -370,7 +385,6 @@ new_contractor = Contractor(contractor_id=1,
                             contractor_email='andrzej@polonex.com',
                             contractor_phone_number=111222333)
 new_position = InvoicePosition('sugar', 'kg', 2.5, '234.234.234', 0, 100, .23)
-print(Invoice.ConvertNetToGross(new_position.net_value, new_position.tax))
 new_invoice = Invoice(owner_id=0,
                       owner_tax_number=1234567890,
                       owner_first_name='Adam',
@@ -396,26 +410,10 @@ new_invoice = Invoice(owner_id=0,
                       contractor_email='andrzej@polonex.com',
                       contractor_phone_number=111222333,
                       invoice_number=1)
+# print('*' * 30)
+# print(new_owner)
+# print('*' * 30)
+# print(new_contractor)
+# print('*' * 30)
 print(new_invoice)
-print('*'*30)
-print(new_owner.owner_tax_number)
-'''new_owner.show_owner()
-new_contractor.show_contractor()
-#new_owner.set_new_password()
-a = Invoice.ConvertEurToPln(10)
-print(a)'''
-
-'''print(vars(new_owner))
-print(new_owner.owner_city)
-print(new_owner._Owner__password)
-print('=' * 30)
-new_owner.password = ''
-print('=' * 30)
-print(new_owner._Owner__password)
-'''
-'''print('='*30)
-a,b=new_owner._Owner__get_login_and_password()
-print(a,b)
-print('='*30)
-c=new_owner.set_new_password()
-print(c)'''
+# print('*' * 30)
