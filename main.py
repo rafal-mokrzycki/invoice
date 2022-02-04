@@ -278,10 +278,10 @@ class Invoice(Owner, Contractor):
             end = input("If you want do add another position, hit 1, otherwise hit 2.")
             position.append(product)
             position.append(unit)
-            position.append(number_of_pieces)
+            position.append(float(number_of_pieces))
             position.append(code)
-            position.append(discount)
-            position.append(net_value)
+            position.append(discount) # trzeba obsłużyć pusty string konwertowalny na float
+            position.append(float(net_value))
             position.append(tax)
             position_list.append(position)
             if end == "1":
