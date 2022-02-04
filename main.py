@@ -1,7 +1,7 @@
 import datetime
 import re
-import pandas as pd
-from django.db import models
+'''import pandas as pd
+from django.db import models'''
 
 
 class Owner:
@@ -170,6 +170,8 @@ Company Name:\t{}""".format(self.contractor_id, self.contractor_tax_number, self
     def add_contractor(self):
         pass
 
+
+# noinspection PyTypeChecker
 class Invoice(Owner, Contractor):
     '''
     Invoice - class operating on invoices enables to issue new invoices and show existing ones
@@ -205,11 +207,13 @@ class Invoice(Owner, Contractor):
     Zobacz więcej: https://poradnikprzedsiebiorcy.pl/-elementy-faktury-vat
     '''
 
-    def __init__(self, invoice_number, contractor_id, contractor_tax_number, contractor_first_name,
+    def __init__(self, owner_id, owner_tax_number, owner_first_name,
+                       owner_last_name, owner_company_name, owner_street, owner_house_number, owner_flat_number,
+                       owner_zip_code, owner_city, owner_email, owner_phone_number, contractor_id, contractor_tax_number, contractor_first_name,
                  contractor_last_name, contractor_company_name,
                  contractor_street, contractor_house_number, contractor_flat_number, contractor_zip_code,
                  contractor_city, contractor_email, contractor_phone_number,
-                 issue_date=datetime.date.today()):
+                 invoice_number, issue_date=datetime.date.today()):
         Owner.__init__(self, owner_id, owner_tax_number, owner_first_name,
                        owner_last_name, owner_company_name, owner_street, owner_house_number, owner_flat_number,
                        owner_zip_code, owner_city, owner_email, owner_phone_number)
@@ -250,6 +254,31 @@ class Invoice(Owner, Contractor):
 
     def calculateGlobalSumInInvoice(self):
         pass
+
+    def __str__(self):
+        return """
+INOIVCE NUMBER: {}
+
+ISSUER:
+{} {}
+{}
+{} {} / {}
+{} {}
+tax number: {}
+
+CONTRACTOR:
+{} {}
+{}
+{} {} / {}
+{} {}
+tax number: {}
+""".format(self.invoice_number, self.owner_first_name, self.owner_last_name, self.owner_company_name,
+           self.owner_street, self.owner_house_number, self.owner_flat_number, self.owner_zip_code,
+           self.owner_city, self.owner_tax_number,
+           self.contractor_first_name, self.contractor_last_name, self.contractor_company_name,
+           self.contractor_street, self.contractor_house_number, self.contractor_flat_number,
+           self.contractor_zip_code, self.contractor_city, self.contractor_tax_number
+           )
 
     def printOut(self):
         pass
@@ -342,6 +371,34 @@ new_contractor = Contractor(contractor_id=1,
                             contractor_phone_number=111222333)
 new_position = InvoicePosition('sugar', 'kg', 2.5, '234.234.234', 0, 100, .23)
 print(Invoice.ConvertNetToGross(new_position.net_value, new_position.tax))
+new_invoice = Invoice(owner_id=0,
+                      owner_tax_number=1234567890,
+                      owner_first_name='Adam',
+                      owner_last_name='Nowak',
+                      owner_company_name='DrutPol',
+                      owner_street='Szkolna',
+                      owner_house_number=13,
+                      owner_flat_number=None,
+                      owner_zip_code='01-111',
+                      owner_city='Warszawa',
+                      owner_email='smith@drutpol.pl',
+                      owner_phone_number=722633544,
+                      contractor_id=1,
+                      contractor_tax_number=987654321,
+                      contractor_first_name='Andrzej',
+                      contractor_last_name='Nowak',
+                      contractor_company_name='Polonex',
+                      contractor_street='Boczna',
+                      contractor_house_number=1,
+                      contractor_flat_number=11,
+                      contractor_zip_code='11-111',
+                      contractor_city='Warszawa',
+                      contractor_email='andrzej@polonex.com',
+                      contractor_phone_number=111222333,
+                      invoice_number=1)
+print(new_invoice)
+print('*'*30)
+print(new_owner.owner_tax_number)
 '''new_owner.show_owner()
 new_contractor.show_contractor()
 #new_owner.set_new_password()
