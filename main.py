@@ -221,18 +221,20 @@ class Invoice(Owner, Contractor):
                  contractor_first_name,
                  contractor_last_name, contractor_company_name,
                  contractor_street, contractor_house_number, contractor_flat_number, contractor_zip_code,
-                 contractor_city, contractor_email, contractor_phone_number,
-                 invoice_number, issue_date=datetime.date.today()):
+                 contractor_city, contractor_email, contractor_phone_number, invoice_number):
         Owner.__init__(self, owner_id, owner_tax_number, owner_first_name,
                        owner_last_name, owner_company_name, owner_street, owner_house_number, owner_flat_number,
-                       owner_zip_code, owner_city, owner_email, owner_phone_number)
+                       owner_zip_code, owner_city, owner_email, owner_phone_number
+                       )
         Contractor.__init__(self, contractor_id, contractor_tax_number, contractor_first_name,
                             contractor_last_name, contractor_company_name,
                             contractor_street, contractor_house_number, contractor_flat_number, contractor_zip_code,
-                            contractor_city, contractor_email, contractor_phone_number)
+                            contractor_city, contractor_email, contractor_phone_number
+                            )
 
         self.invoice_number = str(datetime.date.today().year) + "/" + str(len(self.list_of_invoices) + 1)
-        self.issue_date = issue_date
+        self.issue_date = datetime.date.today()
+        self.position = []
         Invoice.number_of_invoices += 1
         Invoice.list_of_invoices.append(self)
 
@@ -259,6 +261,38 @@ class Invoice(Owner, Contractor):
     contractor_zip_code - contractor address (zip code),
     contractor_city - contractor address (city),
     '''
+
+    def add_position(self):
+        x = 0
+        position_list = []
+        while True:
+            x += 1
+            position = []
+            product = input("Type in name of a product/service: ")
+            unit = input("Type in unit: ")
+            number_of_pieces = input("Type in number of pieces: ")
+            code = input("Type in code for the product/service: ")
+            discount = input("Type in a discount or leave blank: ")
+            net_value = input("Type in net value: ")
+            tax = input("Type in tax rate or leave predefined (23%): ")
+            end = input("If you want do add another position, hit 1, otherwise hit 2.")
+            position.append(product)
+            position.append(unit)
+            position.append(number_of_pieces)
+            position.append(code)
+            position.append(discount)
+            position.append(net_value)
+            position.append(tax)
+            position_list.append(position)
+            if end == "1":
+                print("{} position(s) added to the invoice".format(len(position_list)))
+                continue
+            elif end == "2":
+                print("{} position(s) added to the invoice".format(len(position_list)))
+                break
+            else:
+                print("Wrong number. If you want do add another position, hit 1, otherwise hit 2.")
+        print(position_list)
 
     def calculateSubsumByTaxInInvoice(self):
         pass
@@ -420,3 +454,5 @@ new_invoice = Invoice(owner_id=0,
 # print('*' * 30)
 print(new_invoice)
 # print('*' * 30)
+new_invoice.add_position()
+#print(new_invoice.position)
