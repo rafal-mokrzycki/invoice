@@ -211,7 +211,8 @@ class Invoice(Owner, Contractor):
     known_kinds = ['invoice', 'correction invoice', 'advance payment invoice', 'final invoice', 'proforma']
     known_tax_rates = [0.0, 0.5, 0.8, 0.23, "zw", "np", "oo"]
 
-    invoices = []
+    number_of_invoices = 0
+    list_of_invoices = []
 
     def __init__(self, owner_id, owner_tax_number, owner_first_name,
                  owner_last_name, owner_company_name, owner_street, owner_house_number, owner_flat_number,
@@ -230,8 +231,10 @@ class Invoice(Owner, Contractor):
                             contractor_street, contractor_house_number, contractor_flat_number, contractor_zip_code,
                             contractor_city, contractor_email, contractor_phone_number)
 
-        self.invoice_number = invoice_number
+        self.invoice_number = str(datetime.date.today().year) + "/" + str(len(self.list_of_invoices) + 1)
         self.issue_date = issue_date
+        Invoice.number_of_invoices += 1
+        Invoice.list_of_invoices.append(self)
 
     '''
     init - arguments accepted:
