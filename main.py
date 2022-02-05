@@ -268,8 +268,13 @@ class Invoice(Owner, Contractor):
             position.append(code)
             try:
                 discount = float(input("Type in a discount [0, 100] or leave blank: "))
-                position.append(discount / 100)
-            except ValueError:
+                if discount < 0 or discount > 100:
+                    raise DiscountException("Discount value should be an integer between 0 and 100. Discount 0% will "
+                                            "be applied.")
+                else:
+                    position.append(discount / 100)
+            except DiscountException as e:
+                print("Discount error. {}".format(e))
                 position.append(0.0)
             try:
                 net_value = float(input("Type in net value: "))
@@ -277,11 +282,35 @@ class Invoice(Owner, Contractor):
             except ValueError:
                 position.append(0.0)
             try:
-                tax = float(input("Type in tax rate {} or leave predefined (23%): ".format(self.known_tax_rates)))
-                position.append(tax / 100)
-            except ValueError:
+                tax = input("Type in tax rate {}: ".format(self.known_tax_rates))
+                # checking if tax given by user is on the default tax list
+                if tax not in [str(i) for i in self.known_tax_rates] or tax == "":
+                    raise TaxException("Tax type is not on the list: {}. A regular type (23%) will be applied.".format(self.known_tax_rates))
+                else:
+                    try:
+                        position.append(float(tax))
+                    except:
+                        position.append(tax)
+            except TaxException as e:
+                print("Tax error. {}".format(e))
                 position.append(23 / 100)
-            end = input("Next position ([y]/n) ? ")
+            #     position.append(tax / 100)
+            # except ValueError:
+            #     position.append(23 / 100)
+            end = input("""
+This is your position:
+
+=========================
+Product name:\t\t{}
+Unit:\t\t\t\t{}
+Number of pieces:\t{}
+Code:\t\t\t\t{}
+Discount:\t\t\t{}
+Net value:\t\t\t{}
+Tax rate:\t\t\t{}
+=========================
+            
+Do you want to add next position ([y]/n) ?""".format(product, unit, number_of_pieces, code, discount, net_value, tax))
             position_list.append(position)
             if end == "y":
                 print("{} position(s) added to the invoice".format(len(position_list)))
@@ -391,6 +420,22 @@ class Database:
         df = pd.DataFrame()
         return df
 
+class InvoiceException(Exception):
+
+    #def __init__(self, text, area):
+    def __init__(self, text):
+        super(InvoiceException, self).__init__(text)
+        #self.area = area
+
+    def __str__(self):
+        #return "{}, area {}".format(super().__str__()), self.area)
+        return "{}".format(super().__str__())
+
+class TaxException(InvoiceException):
+    pass
+
+class DiscountException(InvoiceException):
+    pass
 
 
 new_owner = Owner()
