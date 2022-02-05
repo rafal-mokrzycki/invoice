@@ -283,20 +283,22 @@ class Invoice(Owner, Contractor):
                 position.append(0.0)
             try:
                 tax = input("Type in tax rate {}: ".format(self.known_tax_rates))
-                # checking if tax given by user is on the default tax list
+                # checking if the tax given by a user is on the default tax list
                 if tax not in [str(i) for i in self.known_tax_rates] or tax == "":
+                    # if the tax given by a user is NOT on the default tax list, a regular rate 23% is applied
                     raise TaxException("Tax type is not on the list: {}. A regular type (23%) will be applied.".format(self.known_tax_rates))
                 else:
+                    # if the tax is on the list and is a number, will be converted to float and added to the position
                     try:
                         position.append(float(tax))
+                    # if the tax is on the list but isn't a number, will be added to the position AS IS
                     except:
                         position.append(tax)
+            # if the tax given by a user is NOT on the default tax list, a regular rate 23% is applied
             except TaxException as e:
                 print("Tax error. {}".format(e))
                 position.append(23 / 100)
-            #     position.append(tax / 100)
-            # except ValueError:
-            #     position.append(23 / 100)
+            # before the user proceeds, they can see the position
             end = input("""
 This is your position:
 
@@ -320,7 +322,7 @@ Do you want to add next position ([y]/n) ?""".format(product, unit, number_of_pi
                 break
             else:
                 print("Wrong order. If you want to add another position, hit y, otherwise hit n. ")
-        print(position_list)
+        print(position_list) # trzeba coś dodać w stylu wyświetlenie całej faktury i zaakceptowanie
 
     def calculateSubsumByTaxInInvoice(self):
         pass
