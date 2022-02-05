@@ -275,7 +275,7 @@ class Invoice(Owner, Contractor):
             discount = input("Type in a discount or leave blank: ")
             net_value = input("Type in net value: ")
             tax = input("Type in tax rate or leave predefined (23%): ")
-            end = input("If you want do add another position, hit 1, otherwise hit 2.")
+            end = input("Next position ([y]/n) ?")
             position.append(product)
             position.append(unit)
             position.append(float(number_of_pieces))
@@ -284,14 +284,14 @@ class Invoice(Owner, Contractor):
             position.append(float(net_value))
             position.append(tax)
             position_list.append(position)
-            if end == "1":
+            if end == "y":
                 print("{} position(s) added to the invoice".format(len(position_list)))
                 continue
-            elif end == "2":
+            elif end == "n":
                 print("{} position(s) added to the invoice".format(len(position_list)))
                 break
             else:
-                print("Wrong number. If you want do add another position, hit 1, otherwise hit 2.")
+                print("Wrong order. If you want to add another position, hit y, otherwise hit n.")
         print(position_list)
 
     def calculateSubsumByTaxInInvoice(self):
