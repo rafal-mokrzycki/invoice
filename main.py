@@ -175,19 +175,6 @@ class Contractor:
         shows Contractor basic data
         '''
 
-        #     return """
-        # ====================================
-        # CONTRACTOR DATA
-        # ====================================
-        # ID:\t\t\t\t{}
-        # Tax No.:\t\t{}
-        # First Name:\t\t{}
-        # Last Name:\t\t{}
-        # Company Name:\t{}
-        # ====================================""".format(self.contractor_id, self.contractor_tax_number,
-        #                                                self.contractor_first_name, self.contractor_last_name,
-        #                                                self.contractor_company_name)
-
         return """
 {} {}
 {}
@@ -209,7 +196,7 @@ class Invoice(Owner, Contractor):
     '''
 
     known_kinds = ['invoice', 'correction invoice', 'advance payment invoice', 'final invoice', 'proforma']
-    known_tax_rates = [0.0, 0.5, 0.8, 0.23, "zw", "np", "oo"]
+    known_tax_rates = [0, 5, 8, 23, "zw", "np", "oo"]
 
     number_of_invoices = 0
     list_of_invoices = []
@@ -269,20 +256,32 @@ class Invoice(Owner, Contractor):
             x += 1
             position = []
             product = input("Type in name of a product/service: ")
-            unit = input("Type in unit: ")
-            number_of_pieces = input("Type in number of pieces: ")
-            code = input("Type in code for the product/service: ")
-            discount = input("Type in a discount or leave blank: ")
-            net_value = input("Type in net value: ")
-            tax = input("Type in tax rate or leave predefined (23%): ")
-            end = input("Next position ([y]/n) ?")
             position.append(product)
+            unit = input("Type in unit: ")
             position.append(unit)
-            position.append(float(number_of_pieces))
+            try:
+                number_of_pieces = float(input("Type in number of pieces: "))
+                position.append(number_of_pieces)
+            except ValueError:
+                position.append(0.0)
+            code = input("Type in code for the product/service: ")
             position.append(code)
-            position.append(discount) # trzeba obsłużyć pusty string konwertowalny na float
-            position.append(float(net_value))
-            position.append(tax)
+            try:
+                discount = float(input("Type in a discount [0, 100] or leave blank: "))
+                position.append(discount / 100)
+            except ValueError:
+                position.append(0.0)
+            try:
+                net_value = float(input("Type in net value: "))
+                position.append(net_value)
+            except ValueError:
+                position.append(0.0)
+            try:
+                tax = float(input("Type in tax rate {} or leave predefined (23%): ".format(self.known_tax_rates)))
+                position.append(tax / 100)
+            except ValueError:
+                position.append(23 / 100)
+            end = input("Next position ([y]/n) ? ")
             position_list.append(position)
             if end == "y":
                 print("{} position(s) added to the invoice".format(len(position_list)))
@@ -291,7 +290,7 @@ class Invoice(Owner, Contractor):
                 print("{} position(s) added to the invoice".format(len(position_list)))
                 break
             else:
-                print("Wrong order. If you want to add another position, hit y, otherwise hit n.")
+                print("Wrong order. If you want to add another position, hit y, otherwise hit n. ")
         print(position_list)
 
     def calculateSubsumByTaxInInvoice(self):
@@ -301,32 +300,10 @@ class Invoice(Owner, Contractor):
         pass
 
     def __str__(self):
+
         '''
-        super().__str__() + " + that"
+        shows the Invoice
         '''
-#         return """
-# INVOICE NUMBER: {}
-#
-# ISSUER:
-# {}
-# {}
-# {} {} / {}
-# {} {}
-# tax number: {}
-#
-# CONTRACTOR:
-# {} {}
-# {}
-# {} {} / {}
-# {} {}
-# tax number: {}
-# """.format(self.invoice_number, self.owner_first_name, self.owner_last_name, self.owner_company_name,
-#            self.owner_street, self.owner_house_number, self.owner_flat_number, self.owner_zip_code,
-#            self.owner_city, self.owner_tax_number,
-#            self.contractor_first_name, self.contractor_last_name, self.contractor_company_name,
-#            self.contractor_street, self.contractor_house_number, self.contractor_flat_number,
-#            self.contractor_zip_code, self.contractor_city, self.contractor_tax_number
-#            )
 
         return """
 ====================================
@@ -358,7 +335,7 @@ issue date: {}
         return aNewInvoice
 
     '''
-    method for converting EUR to PLN
+    method for . . .
     '''
 
     @staticmethod
@@ -373,10 +350,17 @@ issue date: {}
     def ConvertPlnToEur(PLN):
         return round(PLN * 0.22, 2)
 
+    '''
+    method for converting PLN to EUR
+    '''
+
     @staticmethod
     def ConvertNetToGross(net_value, tax):
         return round(net_value * (1 + tax), 2)
 
+    '''
+    method for calculating gross value
+    '''
 
 class InvoicePosition:
 
@@ -406,6 +390,7 @@ class Database:
     def database(self):
         df = pd.DataFrame()
         return df
+
 
 
 new_owner = Owner()
