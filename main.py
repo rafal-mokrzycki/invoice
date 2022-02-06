@@ -1,5 +1,7 @@
 import datetime
 import re
+import csv
+import pandas as pd
 
 '''import pandas as pd
 from django.db import models'''
@@ -10,36 +12,36 @@ class Owner:
     class Owner defines the owner of the program and issuer of all invoices
     '''
 
-    def __init__(self,
-                 owner_id=0,
-                 owner_tax_number=1234567890,
-                 owner_first_name='Adam',
-                 owner_last_name='Nowak',
-                 owner_company_name='DrutPol',
-                 owner_street='Szkolna',
-                 owner_house_number=13,
-                 owner_flat_number=None,
-                 owner_zip_code='01-111',
-                 owner_city='Warszawa',
-                 owner_email='smith@drutpol.pl',
-                 owner_phone_number=722633544,
-                 login='login',
-                 password='password'
-                 ):
+    OWNER_DATA = pd.read_csv("owner.csv")
+
+    def __init__(self,owner_id=OWNER_DATA.owner_id[0],
+                 owner_tax_number=OWNER_DATA.owner_tax_number[0],
+                 owner_first_name=OWNER_DATA.owner_first_name[0],
+                 owner_last_name=OWNER_DATA.owner_last_name[0],
+                 owner_company_name=OWNER_DATA.owner_company_name[0],
+                 owner_street=OWNER_DATA.owner_street[0],
+                 owner_house_number=OWNER_DATA.owner_house_number[0],
+                 owner_flat_number=OWNER_DATA.owner_flat_number[0],
+                 owner_zip_code=OWNER_DATA.owner_zip_code[0],
+                 owner_city=OWNER_DATA.owner_city[0],
+                 owner_email=OWNER_DATA.owner_email[0],
+                 owner_phone_number=OWNER_DATA.owner_phone_number[0],
+                 login=OWNER_DATA.login[0],
+                 password=OWNER_DATA.password[0]):
         self.owner_id = owner_id
         self.owner_tax_number = owner_tax_number
         self.owner_first_name = owner_first_name
         self.owner_last_name = owner_last_name
         self.owner_company_name = owner_company_name
-        self.owner_street = owner_street
-        self.owner_house_number = owner_house_number
-        self.owner_flat_number = owner_flat_number
-        self.owner_zip_code = owner_zip_code
-        self.owner_city = owner_city
-        self.owner_email = owner_email
-        self.owner_phone_number = owner_phone_number
-        self.__login = login
-        self.__password = password
+        self.owner_street =  owner_street
+        self.owner_house_number =  owner_house_number
+        self.owner_flat_number =  owner_flat_number
+        self.owner_zip_code =  owner_zip_code
+        self.owner_city =  owner_city
+        self.owner_email =  owner_email
+        self.owner_phone_number =  owner_phone_number
+        self.__login =  login
+        self.__password =  password
 
     def __str__(self) -> object:
 
@@ -47,17 +49,6 @@ class Owner:
         shows Owner basic data
         '''
 
-        #         return """
-        # ====================================
-        # OWNER DATA
-        # ====================================
-        # ID:\t\t\t\t{}
-        # Tax No.:\t\t{}
-        # First Name:\t\t{}
-        # Last Name:\t\t{}
-        # Company Name:\t{}
-        # ====================================""".format(self.owner_id, self.owner_tax_number, self.owner_first_name,
-        #                                                self.owner_last_name, self.owner_company_name)
         return """
 {} {}
 {}
@@ -65,9 +56,9 @@ class Owner:
 {} {}
 tax number: {}
 """.format(self.owner_first_name, self.owner_last_name, self.owner_company_name,
-                         self.owner_street, self.owner_house_number, self.owner_flat_number, self.owner_zip_code,
-                         self.owner_city, self.owner_tax_number
-                         )
+           self.owner_street, self.owner_house_number, self.owner_flat_number, self.owner_zip_code,
+           self.owner_city, self.owner_tax_number
+           )
 
     @property
     def login(self):
@@ -127,18 +118,73 @@ tax number: {}
 
         self.__password = None
 
+    def change_data(self, OWNER_DATA=OWNER_DATA):
+
+        """
+        enables to change any owner data except for login or password
+        """
+
+        print("""OWNER DATA:
+{}:\t\t\t\t{}
+{}:\t\t{}
+{}:\t\t{}
+{}:\t\t{}
+{}:\t\t{}
+{}:\t\t\t{}
+{}:\t\t{}
+{}:\t\t{}
+{}:\t\t\t{}
+{}:\t\t\t\t{}
+{}:\t\t\t{}
+{}:\t\t{}""".format(OWNER_DATA.columns[0],OWNER_DATA.owner_id[0],
+            OWNER_DATA.columns[1],OWNER_DATA.owner_tax_number[0],
+            OWNER_DATA.columns[2],OWNER_DATA.owner_first_name[0],
+            OWNER_DATA.columns[3],OWNER_DATA.owner_last_name[0],
+            OWNER_DATA.columns[4],OWNER_DATA.owner_company_name[0],
+            OWNER_DATA.columns[5],OWNER_DATA.owner_street[0],
+            OWNER_DATA.columns[6],OWNER_DATA.owner_house_number[0],
+            OWNER_DATA.columns[7],OWNER_DATA.owner_flat_number[0],
+            OWNER_DATA.columns[8],OWNER_DATA.owner_zip_code[0],
+            OWNER_DATA.columns[9],OWNER_DATA.owner_city[0],
+            OWNER_DATA.columns[10],OWNER_DATA.owner_email[0],
+            OWNER_DATA.columns[11],OWNER_DATA.owner_phone_number[0]))
+
+        # splits string on commas
+        list_to_change = input("If you want to change some values, enter the names separated by commas or hit Esc. ").split(",")
+        print("*"*30)
+        print(list_to_change)
+        print("*"*30)
+        # if list_to_change is not empty, change some fields
+        if list_to_change:
+            for i in list_to_change:
+                # gets rid of unnecessary spaces
+                if i.replace(" ", "") in OWNER_DATA.columns:
+                    OWNER_DATA[i.replace(" ", "")][0] = input("Enter new value for the field {}: ".format(OWNER_DATA.columns[i]))
+        else:
+            print("Empty list provided or operation aborted.")
+
 
 class Contractor:
-    number_of_contractors = 0
-    list_of_contractors = []
+
+    CONTRACTOR_DATA = pd.read_csv("contractor.csv")
 
     '''
     Contractor - class operating on contractors, i.e. customers, suppliers and outsourcing companies
     '''
 
-    def __init__(self, contractor_id, contractor_tax_number, contractor_first_name, contractor_last_name,
-                 contractor_company_name, contractor_street, contractor_house_number, contractor_flat_number,
-                 contractor_zip_code, contractor_city, contractor_email, contractor_phone_number):
+    def __init__(self,contractor_id=CONTRACTOR_DATA.contractor_id[0],
+                 contractor_tax_number=CONTRACTOR_DATA.contractor_tax_number[0],
+                 contractor_first_name=CONTRACTOR_DATA.contractor_first_name[0],
+                 contractor_last_name=CONTRACTOR_DATA.contractor_last_name[0],
+                 contractor_company_name=CONTRACTOR_DATA.contractor_company_name[0],
+                 contractor_street=CONTRACTOR_DATA.contractor_street[0],
+                 contractor_house_number=CONTRACTOR_DATA.contractor_house_number[0],
+                 contractor_flat_number=CONTRACTOR_DATA.contractor_flat_number[0],
+                 contractor_zip_code=CONTRACTOR_DATA.contractor_zip_code[0],
+                 contractor_city=CONTRACTOR_DATA.contractor_city[0],
+                 contractor_email=CONTRACTOR_DATA.contractor_email[0],
+                 contractor_phone_number=CONTRACTOR_DATA.contractor_phone_number[0]):
+
         '''
         init - arguments accepted:
         contractor_id - contractor number in a database,
@@ -160,17 +206,16 @@ class Contractor:
         self.contractor_first_name = contractor_first_name
         self.contractor_last_name = contractor_last_name
         self.contractor_company_name = contractor_company_name
-        self.contractor_street = contractor_street
-        self.contractor_house_number = contractor_house_number
-        self.contractor_flat_number = contractor_flat_number
-        self.contractor_zip_code = contractor_zip_code
-        self.contractor_city = contractor_city
-        self.contractor_email = contractor_email
-        self.contractor_phone_number = contractor_phone_number
-        Contractor.number_of_contractors += 1
-        Contractor.list_of_contractors.append(self)
+        self.contractor_street =  contractor_street
+        self.contractor_house_number =  contractor_house_number
+        self.contractor_flat_number =  contractor_flat_number
+        self.contractor_zip_code =  contractor_zip_code
+        self.contractor_city =  contractor_city
+        self.contractor_email =  contractor_email
+        self.contractor_phone_number =  contractor_phone_number
 
     def __str__(self):
+
         '''
         shows Contractor basic data
         '''
@@ -182,12 +227,35 @@ class Contractor:
 {} {}
 tax number: {}
 """.format(self.contractor_first_name, self.contractor_last_name, self.contractor_company_name,
-                         self.contractor_street, self.contractor_house_number, self.contractor_flat_number,
-                         self.contractor_zip_code, self.contractor_city, self.contractor_tax_number
-                         )
+           self.contractor_street, self.contractor_house_number, self.contractor_flat_number,
+           self.contractor_zip_code, self.contractor_city, self.contractor_tax_number
+           )
 
-    def add_contractor(self):
-        pass
+    def add_contractor(self, CONTRACTOR_DATA=CONTRACTOR_DATA):
+
+        """
+        :param CONTRACTOR_DATA: class variable
+        :return: adds new contractor to the contractors.csv file
+        """
+
+        new_contractor = []
+
+        for column in CONTRACTOR_DATA.columns:
+            # contractor_id counted and added automatically
+            if column == "contractor_id":
+                with open('contractor.csv', 'r', newline='\n') as f:
+                    first_element_last_line = int(f.readlines()[-1][0])
+                    new_contractor.append(first_element_last_line + 1)
+            else:
+                # all the other parameters added manually
+                element_to_add = input("Enter {} or leave blank: ".format(column))
+                new_contractor.append(element_to_add)
+
+        with open('contractor.csv', 'a', newline='\n') as f:
+            writer = csv.writer(f)
+            # write one row
+            writer.writerow(new_contractor)
+
 
 
 class Invoice(Owner, Contractor):
@@ -286,7 +354,8 @@ class Invoice(Owner, Contractor):
                 # checking if the tax given by a user is on the default tax list
                 if tax not in [str(i) for i in self.known_tax_rates] or tax == "":
                     # if the tax given by a user is NOT on the default tax list, a regular rate 23% is applied
-                    raise TaxException("Tax type is not on the list: {}. A regular type (23%) will be applied.".format(self.known_tax_rates))
+                    raise TaxException("Tax type is not on the list: {}. A regular type (23%) will be applied.".format(
+                        self.known_tax_rates))
                 else:
                     # if the tax is on the list and is a number, will be converted to float and added to the position
                     try:
@@ -322,7 +391,7 @@ Do you want to add next position ([y]/n) ?""".format(product, unit, number_of_pi
                 break
             else:
                 print("Wrong order. If you want to add another position, hit y, otherwise hit n. ")
-        print(position_list) # trzeba coś dodać w stylu wyświetlenie całej faktury i zaakceptowanie
+        print(position_list)  # trzeba coś dodać w stylu wyświetlenie całej faktury i zaakceptowanie
 
     def calculateSubsumByTaxInInvoice(self):
         pass
@@ -393,6 +462,7 @@ issue date: {}
     method for calculating gross value
     '''
 
+
 class InvoicePosition:
 
     def __init__(self, position: str,
@@ -422,6 +492,7 @@ class Database:
         df = pd.DataFrame()
         return df
 
+
 class InvoiceException(Exception):
 
     def __init__(self, text):
@@ -430,8 +501,10 @@ class InvoiceException(Exception):
     def __str__(self):
         return "{}".format(super().__str__())
 
+
 class TaxException(InvoiceException):
     pass
+
 
 class DiscountException(InvoiceException):
     pass
@@ -481,7 +554,11 @@ new_invoice = Invoice(owner_id=0,
 # print('*' * 30)
 # print(new_contractor)
 # print('*' * 30)
-print(new_invoice)
-# print('*' * 30)
-new_invoice.add_position()
-#print(new_invoice.position)
+# print(new_invoice)
+# # print('*' * 30)
+# new_invoice.add_position()
+# print(new_invoice.position)
+# new_owner = Owner()
+# new_owner.change_data()
+# new_contractor = Contractor()
+Contractor().add_contractor()

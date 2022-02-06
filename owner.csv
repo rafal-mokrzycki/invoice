@@ -1,0 +1,2 @@
+owner_id,owner_tax_number,owner_first_name,owner_last_name,owner_company_name,owner_street,owner_house_number,owner_flat_number,owner_zip_code,owner_city,owner_email,owner_phone_number,login,password
+1,1234567890,'Adam','Nowak','DrutPol','Szkolna',13,None,'01-111','Warszawa','smith@drutpol.pl',722633544,'login','password'

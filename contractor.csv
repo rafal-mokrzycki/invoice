@@ -1,0 +1,4 @@
+contractor_id,contractor_tax_number,contractor_first_name,contractor_last_name,contractor_company_name,contractor_street,contractor_house_number,contractor_flat_number,contractor_zip_code,contractor_city,contractor_email,contractor_phone_number
+1,234523452,'Adam','Nowak','Nowak&Nowak','Miejska',12,1,'00-002','Warszawa','nowak@nowak.pl',987654321
+2,987654321,Ewa,Nowakowa,Nowakov,Boczna,123,33,00-003,Warszawa,nowakova@nowakova.pl,987656789
+3,789432567,Tomasz,Blanko,Blanco S.A.,Daleka,32,22,45-009,Opole,info@blanco.com,685665443
