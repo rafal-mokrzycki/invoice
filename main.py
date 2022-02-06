@@ -303,13 +303,13 @@ class Invoice(Owner, Contractor):
 This is your position:
 
 =========================
-Product name:\t\t{}
-Unit:\t\t\t\t{}
-Number of pieces:\t{}
-Code:\t\t\t\t{}
-Discount:\t\t\t{}
-Net value:\t\t\t{}
-Tax rate:\t\t\t{}
+Product name:      {}
+Unit:              {}
+Number of pieces:  {}
+Code:              {}
+Discount:          {}
+Net value:         {}
+Tax rate:          {}
 =========================
             
 Do you want to add next position ([y]/n) ?""".format(product, unit, number_of_pieces, code, discount, net_value, tax))
@@ -424,13 +424,10 @@ class Database:
 
 class InvoiceException(Exception):
 
-    #def __init__(self, text, area):
     def __init__(self, text):
         super(InvoiceException, self).__init__(text)
-        #self.area = area
 
     def __str__(self):
-        #return "{}, area {}".format(super().__str__()), self.area)
         return "{}".format(super().__str__())
 
 class TaxException(InvoiceException):

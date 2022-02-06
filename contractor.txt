@@ -1,0 +1,12 @@
+contractor_id=1,
+contractor_tax_number=987654321,
+contractor_first_name='Andrzej',
+contractor_last_name='Nowak',
+contractor_company_name='Polonex',
+contractor_street='Boczna',
+contractor_house_number=1,
+contractor_flat_number=11,
+contractor_zip_code='11-111',
+contractor_city='Warszawa',
+contractor_email='andrzej@polonex.com',
+contractor_phone_number=111222333
