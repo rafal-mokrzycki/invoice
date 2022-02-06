@@ -14,7 +14,7 @@ class Owner:
 
     OWNER_DATA = pd.read_csv("owner.csv")
 
-    def __init__(self,owner_id=OWNER_DATA.owner_id[0],
+    def __init__(self, owner_id=OWNER_DATA.owner_id[0],
                  owner_tax_number=OWNER_DATA.owner_tax_number[0],
                  owner_first_name=OWNER_DATA.owner_first_name[0],
                  owner_last_name=OWNER_DATA.owner_last_name[0],
@@ -33,15 +33,15 @@ class Owner:
         self.owner_first_name = owner_first_name
         self.owner_last_name = owner_last_name
         self.owner_company_name = owner_company_name
-        self.owner_street =  owner_street
-        self.owner_house_number =  owner_house_number
-        self.owner_flat_number =  owner_flat_number
-        self.owner_zip_code =  owner_zip_code
-        self.owner_city =  owner_city
-        self.owner_email =  owner_email
-        self.owner_phone_number =  owner_phone_number
-        self.__login =  login
-        self.__password =  password
+        self.owner_street = owner_street
+        self.owner_house_number = owner_house_number
+        self.owner_flat_number = owner_flat_number
+        self.owner_zip_code = owner_zip_code
+        self.owner_city = owner_city
+        self.owner_email = owner_email
+        self.owner_phone_number = owner_phone_number
+        self.__login = login
+        self.__password = password
 
     def __str__(self) -> object:
 
@@ -136,43 +136,44 @@ tax number: {}
 {}:\t\t\t{}
 {}:\t\t\t\t{}
 {}:\t\t\t{}
-{}:\t\t{}""".format(OWNER_DATA.columns[0],OWNER_DATA.owner_id[0],
-            OWNER_DATA.columns[1],OWNER_DATA.owner_tax_number[0],
-            OWNER_DATA.columns[2],OWNER_DATA.owner_first_name[0],
-            OWNER_DATA.columns[3],OWNER_DATA.owner_last_name[0],
-            OWNER_DATA.columns[4],OWNER_DATA.owner_company_name[0],
-            OWNER_DATA.columns[5],OWNER_DATA.owner_street[0],
-            OWNER_DATA.columns[6],OWNER_DATA.owner_house_number[0],
-            OWNER_DATA.columns[7],OWNER_DATA.owner_flat_number[0],
-            OWNER_DATA.columns[8],OWNER_DATA.owner_zip_code[0],
-            OWNER_DATA.columns[9],OWNER_DATA.owner_city[0],
-            OWNER_DATA.columns[10],OWNER_DATA.owner_email[0],
-            OWNER_DATA.columns[11],OWNER_DATA.owner_phone_number[0]))
+{}:\t\t{}""".format(OWNER_DATA.columns[0], OWNER_DATA.owner_id[0],
+                    OWNER_DATA.columns[1], OWNER_DATA.owner_tax_number[0],
+                    OWNER_DATA.columns[2], OWNER_DATA.owner_first_name[0],
+                    OWNER_DATA.columns[3], OWNER_DATA.owner_last_name[0],
+                    OWNER_DATA.columns[4], OWNER_DATA.owner_company_name[0],
+                    OWNER_DATA.columns[5], OWNER_DATA.owner_street[0],
+                    OWNER_DATA.columns[6], OWNER_DATA.owner_house_number[0],
+                    OWNER_DATA.columns[7], OWNER_DATA.owner_flat_number[0],
+                    OWNER_DATA.columns[8], OWNER_DATA.owner_zip_code[0],
+                    OWNER_DATA.columns[9], OWNER_DATA.owner_city[0],
+                    OWNER_DATA.columns[10], OWNER_DATA.owner_email[0],
+                    OWNER_DATA.columns[11], OWNER_DATA.owner_phone_number[0]))
 
         # splits string on commas
-        list_to_change = input("If you want to change some values, enter the names separated by commas or hit Esc. ").split(",")
-        print("*"*30)
+        list_to_change = input(
+            "If you want to change some values, enter the names separated by commas or hit Esc. ").split(",")
+        print("*" * 30)
         print(list_to_change)
-        print("*"*30)
+        print("*" * 30)
         # if list_to_change is not empty, change some fields
         if list_to_change:
             for i in list_to_change:
                 # gets rid of unnecessary spaces
                 if i.replace(" ", "") in OWNER_DATA.columns:
-                    OWNER_DATA[i.replace(" ", "")][0] = input("Enter new value for the field {}: ".format(OWNER_DATA.columns[i]))
+                    OWNER_DATA[i.replace(" ", "")][0] = input(
+                        "Enter new value for the field {}: ".format(OWNER_DATA.columns[i]))
         else:
             print("Empty list provided or operation aborted.")
 
 
 class Contractor:
-
     CONTRACTOR_DATA = pd.read_csv("contractor.csv")
 
     '''
     Contractor - class operating on contractors, i.e. customers, suppliers and outsourcing companies
     '''
 
-    def __init__(self,contractor_id=CONTRACTOR_DATA.contractor_id[0],
+    def __init__(self, contractor_id=CONTRACTOR_DATA.contractor_id[0],
                  contractor_tax_number=CONTRACTOR_DATA.contractor_tax_number[0],
                  contractor_first_name=CONTRACTOR_DATA.contractor_first_name[0],
                  contractor_last_name=CONTRACTOR_DATA.contractor_last_name[0],
@@ -206,13 +207,13 @@ class Contractor:
         self.contractor_first_name = contractor_first_name
         self.contractor_last_name = contractor_last_name
         self.contractor_company_name = contractor_company_name
-        self.contractor_street =  contractor_street
-        self.contractor_house_number =  contractor_house_number
-        self.contractor_flat_number =  contractor_flat_number
-        self.contractor_zip_code =  contractor_zip_code
-        self.contractor_city =  contractor_city
-        self.contractor_email =  contractor_email
-        self.contractor_phone_number =  contractor_phone_number
+        self.contractor_street = contractor_street
+        self.contractor_house_number = contractor_house_number
+        self.contractor_flat_number = contractor_flat_number
+        self.contractor_zip_code = contractor_zip_code
+        self.contractor_city = contractor_city
+        self.contractor_email = contractor_email
+        self.contractor_phone_number = contractor_phone_number
 
     def __str__(self):
 
@@ -255,7 +256,6 @@ tax number: {}
             writer = csv.writer(f)
             # write one row
             writer.writerow(new_contractor)
-
 
 
 class Invoice(Owner, Contractor):
@@ -380,7 +380,7 @@ Discount:          {}
 Net value:         {}
 Tax rate:          {}
 =========================
-            
+
 Do you want to add next position ([y]/n) ?""".format(product, unit, number_of_pieces, code, discount, net_value, tax))
             position_list.append(position)
             if end == "y":
