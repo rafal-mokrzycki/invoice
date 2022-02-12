@@ -3,9 +3,6 @@ import re
 import csv
 import pandas as pd
 
-'''import pandas as pd
-from django.db import models'''
-
 
 class Owner:
     '''
@@ -43,7 +40,7 @@ class Owner:
         self.__login = login
         self.__password = password
 
-    def __str__(self) -> object:
+    def __str__(self):
 
         '''
         shows Owner basic data
@@ -167,6 +164,7 @@ tax number: {}
 
 
 class Contractor:
+
     CONTRACTOR_DATA = pd.read_csv("contractor.csv")
 
     '''
@@ -257,6 +255,52 @@ tax number: {}
             # write one row
             writer.writerow(new_contractor)
 
+    def change_contractor_data(self, CONTRACTOR_DATA=CONTRACTOR_DATA):
+
+        """
+        enables to change any contractor data except for login or password
+        """
+
+        print("""CONTRACTOR DATA:
+{}:\t\t\t\t{}
+{}:\t\t{}
+{}:\t\t{}
+{}:\t\t{}
+{}:\t\t{}
+{}:\t\t\t{}
+{}:\t\t{}
+{}:\t\t{}
+{}:\t\t\t{}
+{}:\t\t\t\t{}
+{}:\t\t\t{}
+{}:\t\t{}""".format(CONTRACTOR_DATA.columns[0], CONTRACTOR_DATA.contractor_id[0],
+                    CONTRACTOR_DATA.columns[1], CONTRACTOR_DATA.contractor_tax_number[0],
+                    CONTRACTOR_DATA.columns[2], CONTRACTOR_DATA.contractor_first_name[0],
+                    CONTRACTOR_DATA.columns[3], CONTRACTOR_DATA.contractor_last_name[0],
+                    CONTRACTOR_DATA.columns[4], CONTRACTOR_DATA.contractor_company_name[0],
+                    CONTRACTOR_DATA.columns[5], CONTRACTOR_DATA.contractor_street[0],
+                    CONTRACTOR_DATA.columns[6], CONTRACTOR_DATA.contractor_house_number[0],
+                    CONTRACTOR_DATA.columns[7], CONTRACTOR_DATA.contractor_flat_number[0],
+                    CONTRACTOR_DATA.columns[8], CONTRACTOR_DATA.contractor_zip_code[0],
+                    CONTRACTOR_DATA.columns[9], CONTRACTOR_DATA.contractor_city[0],
+                    CONTRACTOR_DATA.columns[10], CONTRACTOR_DATA.contractor_email[0],
+                    CONTRACTOR_DATA.columns[11], CONTRACTOR_DATA.contractor_phone_number[0]))
+
+        # splits string on commas
+        list_to_change = input(
+            "If you want to change some values, enter the names separated by commas or hit Esc. ").split(",")
+        print("*" * 30)
+        print(list_to_change)
+        print("*" * 30)
+        # if list_to_change is not empty, change some fields
+        if list_to_change:
+            for i in list_to_change:
+                # gets rid of unnecessary spaces
+                if i.replace(" ", "") in CONTRACTOR_DATA.columns:
+                    CONTRACTOR_DATA[i.replace(" ", "")][0] = input(
+                        "Enter new value for the field {}: ".format(CONTRACTOR_DATA.columns[i]))
+        else:
+            print("Empty list provided or operation aborted.")
 
 class Invoice(Owner, Contractor):
     '''
