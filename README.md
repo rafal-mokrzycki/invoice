@@ -29,23 +29,23 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/github_username/repo_name">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  <a href="https://github.com/rafal-mokrzycki/invoice">
+    <img src="https://github.com/rafal-mokrzycki/invoice/invoice_logo.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">project_title</h3>
+<h3 align="center">Invoicing system</h3>
 
   <p align="center">
     project_description
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/rafal-mokrzycki/invoice"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    <a href="https://github.com/rafal-mokrzycki/invoice">View Demo</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
+    <a href="https://github.com/rafal-mokrzycki/invoice/issues">Report Bug</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+    <a href="https://github.com/rafal-mokrzycki/invoice/issues">Request Feature</a>
   </p>
 </div>
 
@@ -92,14 +92,11 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ### Built With
 
-* [Next.js](https://nextjs.org/)
-* [React.js](https://reactjs.org/)
-* [Vue.js](https://vuejs.org/)
-* [Angular](https://angular.io/)
-* [Svelte](https://svelte.dev/)
-* [Laravel](https://laravel.com)
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
+* [Python 3](https://www.python.org)
+* [pandas](https://pandas.pydata.org/)
+* [datetime](https://docs.python.org/3/library/datetime.html)
+* [re](https://docs.python.org/3/library/re.html)
+* [csv](https://docs.python.org/3/library/csv.html)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -142,7 +139,7 @@ This is an example of how to list things you need to use the software and how to
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+This project can be used for issuing invoices based on Polish tax law. I may be also used to maintain a database with contractors.
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
@@ -153,10 +150,18 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] Issuing invoices
+    - [ ] issuer and contractor data automatically filled in based on tax numbers input from user
+    - [ ] manual invoice position input
+    - [ ] automatic sum by tax groups and general sum computed
+- [ ] Creating a database
+    - [ ] table with contractors
+    - [ ] table with owner and other possible users
+- [ ] Printing out invoices
+- [ ] Sending invoices via email to an accountant and to the contractor
+- [ ] Invoice display 
+    - [ ] short version
+    - [ ] full version
 
 See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
 
@@ -194,9 +199,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Rafał Mokrzycki - [rafal.mokrzycki@interia.pl](mailto:rafal.mokrzycki@interia.pl)
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+Project Link: [https://github.com/rafal-mokrzycki/invoice](https://github.com/rafal-mokrzycki/invoice)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -216,7 +221,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
-[contributors-url]: https://github.com/github_username/repo_name/graphs/contributors
+[contributors-url]: https://github.com/rafal-mokrzycki/invoice
 [forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
 [forks-url]: https://github.com/github_username/repo_name/network/members
 [stars-shield]: https://img.shields.io/github/stars/github_username/repo_name.svg?style=for-the-badge
@@ -226,5 +231,5 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
 [license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
+[linkedin-url]: https://www.linkedin.com/in/rafa%C5%82-m-9733b6180/
 [product-screenshot]: images/screenshot.png
