@@ -29,7 +29,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/rafal-mokrzycki/invoice">
+  <a href="https://github.com/rafal-mokrzycki/invoice/blob/master/invoice_logo.png">
     <img src="https://github.com/rafal-mokrzycki/invoice/blob/master/invoice_logo.png" alt="Logo" width="80" height="80">
   </a>
 
