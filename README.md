@@ -30,7 +30,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/rafal-mokrzycki/invoice">
-    <img src="https://github.com/rafal-mokrzycki/invoice/invoice_logo.png" alt="Logo" width="80" height="80">
+    <img src="https://github.com/rafal-mokrzycki/invoice/blob/master/invoice_logo.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Invoicing system</h3>
@@ -121,7 +121,7 @@ This is an example of how to list things you need to use the software and how to
 1. Get a free API Key at [https://example.com](https://example.com)
 2. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/rafal-mokrzycki/invoice.git
    ```
 3. Install NPM packages
    ```sh
@@ -163,7 +163,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
     - [ ] short version
     - [ ] full version
 
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/rafal-mokrzycki/invoice/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -220,16 +220,16 @@ Project Link: [https://github.com/rafal-mokrzycki/invoice](https://github.com/ra
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/rafal-mokrzycki/invoice.svg?style=for-the-badge
 [contributors-url]: https://github.com/rafal-mokrzycki/invoice
-[forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
-[forks-url]: https://github.com/github_username/repo_name/network/members
-[stars-shield]: https://img.shields.io/github/stars/github_username/repo_name.svg?style=for-the-badge
-[stars-url]: https://github.com/github_username/repo_name/stargazers
-[issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
-[issues-url]: https://github.com/github_username/repo_name/issues
-[license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
-[license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
+[forks-shield]: https://img.shields.io/github/forks/rafal-mokrzycki/invoice.svg?style=for-the-badge
+[forks-url]: https://github.com/rafal-mokrzycki/invoice/network/members
+[stars-shield]: https://img.shields.io/github/stars/rafal-mokrzycki/invoice.svg?style=for-the-badge
+[stars-url]: https://github.com/rafal-mokrzycki/invoice/stargazers
+[issues-shield]: https://img.shields.io/github/issues/rafal-mokrzycki/invoice.svg?style=for-the-badge
+[issues-url]: https://github.com/rafal-mokrzycki/invoice/issues
+[license-shield]: https://img.shields.io/github/license/rafal-mokrzycki/invoice.svg?style=for-the-badge
+[license-url]: https://github.com/rafal-mokrzycki/invoice/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/rafa%C5%82-m-9733b6180/
 [product-screenshot]: images/screenshot.png
